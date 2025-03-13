@@ -1,35 +1,58 @@
 "use client";
 import React, { useRef } from "react";
+
 import { useReactToPrint } from "react-to-print";
 import { numberToWords } from "amount-to-words";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const Invoice = () => {
+interface InvoiceItem {
+  particulars: string;
+  hsn: string;
+  gst: string;
+  qty: string | number;
+  rate: string | number;
+}
+
+interface Invoice {
+  invoiceNo: string;
+  date: string;
+  buyerName: string;
+  buyerGstin: string;
+  items: InvoiceItem[];
+}
+
+const InvoicePageWrapper = () => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
-  // const downloadPDF = async () => {
-  //   const element = invoiceRef.current;
-  //   if (!element) return;
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+  });
+  const searchParams = useSearchParams();
+  const data = searchParams.get("data");
 
-  //   const canvas = await html2canvas(element, {
-  //     scale: 2,
-  //   });
+  const [invoice, setInvoice] = useState<Invoice | null>(null);
 
-  //   const data = canvas.toDataURL("image/png");
+  useEffect(() => {
+    if (data) {
+      try {
+        const parsed = JSON.parse(decodeURIComponent(data));
+        setInvoice(parsed);
+      } catch (err) {
+        console.error("Failed to parse invoice data", err);
+      }
+    }
+  }, [data]);
 
-  //   const pdf = new jsPDF({
-  //     orientation: "portrait",
-  //     unit: "px",
-  //     format: "a4",
-  //   });
+  // Add null check before calculating totals
+  if (!invoice) return <div className="p-8">Loading invoice...</div>;
 
-  //   const imgProperties = pdf.getImageProperties(data);
-  //   const pdfWidth = pdf.internal.pageSize.getWidth();
-
-  //   const pdfHeight = (imgProperties.height * pdfWidth) / imgProperties.width;
-
-  //   pdf.addImage(data, "PNG", 0, 0, pdfWidth, pdfHeight);
-  //   pdf.save("invoice.pdf");
-  // };
+  const totalAmount = invoice.items.reduce(
+    (acc, item) => acc + Number(item.qty) * Number(item.rate),
+    0
+  );
+  const cgst = (totalAmount * 0.09).toFixed(2);
+  const sgst = (totalAmount * 0.09).toFixed(2);
+  const grandTotal = Number(totalAmount) + Number(cgst) + Number(sgst);
 
   return (
     <div className="flex flex-col items-center p-8">
@@ -38,7 +61,7 @@ const Invoice = () => {
           onClick={() => reactToPrintFn()}
           className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
-          Download PDF
+          Print Invoice
         </button>
       </div>
 
@@ -68,18 +91,18 @@ const Invoice = () => {
           <div className="w-[390px] border-l px-2">
             <div className="max-w-2xl  text-sm">
               <div className="flex justify-between">
-                <div className="w-1/2  px-2 py-1 ">
+                <div className="w-[300px]  px-2 py-1 ">
                   <span className="font-semibold">Invoice No.</span> :{" "}
-                  <span className="ml-1">65</span>
+                  <span className="ml-1"> {invoice.invoiceNo}</span>
                 </div>
-                <div className="w-1/2 px-2 py-1">
+                <div className="w-1/2 px-2 py-1 ">
                   <span className="font-semibold">Date</span> :{" "}
-                  <span className="ml-1">25/01/24</span>
+                  <span className="ml-1">{invoice.date}</span>
                 </div>
               </div>
 
               <div className="flex justify-between">
-                <div className="w-1/2  px-2 py-1">
+                <div className="w-[300px]  px-2 py-1 ">
                   <span className="font-semibold">DC No.</span> :
                 </div>
                 <div className="w-1/2 px-2 py-1">
@@ -88,16 +111,16 @@ const Invoice = () => {
               </div>
 
               <div className="flex justify-between">
-                <div className="w-1/2  px-2 py-1">
+                <div className="w-[300px]  px-2 py-1">
                   <span className="font-semibold">P.O. No.</span> :
                 </div>
-                <div className="w-1/2 px-2 py-1">
+                <div className="w-1/2 px-2 py-1 ">
                   <span className="font-semibold">Date</span> :
                 </div>
               </div>
 
               <div className="flex justify-between">
-                <div className="w-1/2 px-2 py-1">
+                <div className="w-[300px] px-2 py-1">
                   <span className="font-semibold">Way Bill No.</span> :
                 </div>
                 <div className="w-1/2 px-2 py-1">
@@ -119,17 +142,17 @@ const Invoice = () => {
         <div className="mb-2 text-sm">
           <strong className="text-base">Buyer (Bill to)</strong>
           <br />
-          OM SAI TECHNOLOGIES
+          {invoice.buyerName.toUpperCase()}
           <br />
           PLOT NO-10, PAIGHA HOUSING COLONY
           <br />
           S.P.ROAD, SECUNDERABAD - 03
           <br />
-          GSTIN/UIN : 36ADEF9746OR2ZY
+          GSTIN/UIN : {invoice.buyerGstin.toUpperCase()}
           <br />
           State Name : Telangana, Code : 36
         </div>
-        {/* <div className="border border-black"> */}
+
         <table className="w-full  text-xs border-collapse">
           <thead>
             <tr className="bg-gray-200 h-8">
@@ -144,56 +167,46 @@ const Invoice = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="h-6">
-              <td className="border text-center">1</td>
-              <td className="border   pl-2">AARVEX 1TB SSD HDD</td>
-              <td className="border   text-center">85235100</td>
-              <td className="border   text-center">18%</td>
-              <td className="border   text-center">1 Nos</td>
+            {invoice.items.map((item: InvoiceItem, idx: number) => (
+              <tr key={idx} className="h-6">
+                <td className="border text-center">{idx + 1}</td>
+                <td className="border   pl-2">{item.particulars}</td>
+                <td className="border   text-center">{item.hsn}</td>
+                <td className="border   text-center">{item.gst}</td>
+                <td className="border   text-center">{item.qty}</td>
 
-              <td className="border   text-center">3,347.46</td>
-              <td className="border   text-center">3,347.46</td>
-            </tr>
-            <tr className="h-6">
-              <td className="border   text-center">2</td>
-              <td className="border   pl-2">LAPTOP BATTERY</td>
-              <td className="border   text-center">85078000</td>
-              <td className="border   text-center">18%</td>
-              <td className="border   text-center">1 Nos</td>
-
-              <td className="border   text-center">1,991.53</td>
-              <td className="border   text-center">1,991.53</td>
-            </tr>
+                <td className="border   text-center">₹ {item.rate}</td>
+                <td className="border   text-center">
+                  ₹ {Number(item.rate) * Number(item.qty)}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
         <div className="w-full flex justify-end p-4 border-b">
           <table className="text-xs ">
             <tr className=" h-6">
               <td className="w-[120px]">Total: </td>
-              <td>₹ 5,338.99</td>
+              <td>₹ {totalAmount}</td>
             </tr>
             <tr className=" h-6">
               <td className="w-[120px]">CGST:</td>
-              <td>₹ 480.51</td>
+              <td>₹ {cgst}</td>
             </tr>
             <tr className=" h-6">
               <td className="w-[120px]">SGST:</td>
-              <td>₹ 480.51</td>
-            </tr>
-            <tr className=" h-6">
-              <td className="w-[120px]">Rounded Off:</td>
-              <td>₹ -0.01</td>
+              <td>₹ {sgst}</td>
             </tr>
             <tr className=" h-6 font-bold">
               <td className="w-[120px] ">Total Amount:</td>
-              <td>₹ 6,300.00</td>
+              <td>₹ {grandTotal}</td>
             </tr>
           </table>
         </div>
 
-        <div className="mt-4">
+        <div className="py-2 border-b ">
           <strong className="pr-2">Amount Chargeable (in words) :</strong>
-          {numberToWords(6300)} Rupees Only
+          {numberToWords(grandTotal.toFixed(0))} Only
         </div>
 
         <div className="mt-4">
@@ -271,4 +284,4 @@ const Invoice = () => {
   );
 };
 
-export default Invoice;
+export default InvoicePageWrapper;

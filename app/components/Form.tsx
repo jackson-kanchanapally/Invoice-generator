@@ -2,9 +2,28 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
+interface InvoiceItem {
+  particulars: string;
+  hsn: string;
+  gst: string;
+  qty: string;
+  rate: string;
+}
+
+interface InvoiceData {
+  invoiceNo: string;
+  date: string;
+  buyerName: string;
+  buyerGstin: string;
+  cgst: string;
+  sgst: string;
+  grandTotal: string;
+}
+
 export default function InvoiceForm() {
   const router = useRouter();
-  const [invoiceData, setInvoiceData] = useState({
+  const [invoiceData, setInvoiceData] = useState<InvoiceData>({
     invoiceNo: "",
     date: "",
     buyerName: "",
@@ -14,7 +33,7 @@ export default function InvoiceForm() {
     grandTotal: "",
   });
 
-  const [items, setItems] = useState([
+  const [items, setItems] = useState<InvoiceItem[]>([
     { particulars: "", hsn: "", gst: "", qty: "", rate: "" },
   ]);
 
@@ -23,7 +42,7 @@ export default function InvoiceForm() {
     setInvoiceData({ ...invoiceData, [name]: value });
   };
 
-  const handleItemChange = (index: number, field: string, value: any) => {
+  const handleItemChange = (index: number, field: keyof InvoiceItem, value: string) => {
     const updated = [...items];
     updated[index] = { ...updated[index], [field]: value };
     setItems(updated);
@@ -36,7 +55,7 @@ export default function InvoiceForm() {
     ]);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
@@ -77,6 +96,9 @@ export default function InvoiceForm() {
           value={invoiceData.date}
           onChange={handleChange}
         />
+        {/* buyer details */}
+        <h2 className="text-xl font-semibold mb-1">Buyer Details</h2>
+        <h1> </h1>
         <input
           name="buyerName"
           placeholder="Buyer Name"
@@ -102,7 +124,7 @@ export default function InvoiceForm() {
         >
           <input
             placeholder="Particulars"
-            className="input md:col-span-2 h-8 "
+            className="input md:col-span-2 h-8"
             value={item.particulars}
             onChange={(e) =>
               handleItemChange(idx, "particulars", e.target.value)
@@ -110,33 +132,29 @@ export default function InvoiceForm() {
           />
           <input
             placeholder="HSN Code"
-            className="input h-8 "
+            className="input h-8"
             value={item.hsn}
             onChange={(e) => handleItemChange(idx, "hsn", e.target.value)}
           />
           <input
             placeholder="GST %"
-            className="input h-8 "
+            className="input h-8"
             value={item.gst}
             onChange={(e) => handleItemChange(idx, "gst", e.target.value)}
           />
           <input
             placeholder="Qty"
-            className="input h-8 "
+            className="input h-8"
             type="number"
             value={item.qty}
-            onChange={(e) =>
-              handleItemChange(idx, "qty", Number(e.target.value))
-            }
+            onChange={(e) => handleItemChange(idx, "qty", e.target.value)}
           />
           <input
             type="number"
             placeholder="Rate"
-            className="input h-8 "
+            className="input h-8"
             value={item.rate}
-            onChange={(e) =>
-              handleItemChange(idx, "rate", Number(e.target.value))
-            }
+            onChange={(e) => handleItemChange(idx, "rate", e.target.value)}
           />
         </div>
       ))}
