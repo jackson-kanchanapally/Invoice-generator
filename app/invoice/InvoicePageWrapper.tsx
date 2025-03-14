@@ -86,7 +86,7 @@ const InvoicePageWrapper = () => {
       >
         <h2 className="text-center font-bold  text-base">GST INVOICE</h2>
         <div className="border flex-grow ">
-          <div className="flex justify-between mt-2  text-xs border-b pb-1 mb-2">
+          <div className="flex justify-between mt-[1px]  text-xs border-b  mb-[1px]">
             <div className="w-1/2 text-xs pl-2 ">
               <strong className="text-base">OM SAI TECHNOLOGIES</strong>
               <br />
@@ -161,8 +161,8 @@ const InvoicePageWrapper = () => {
               </div>
             </div>
           </div>
-          <div className="h-[575px]">
-            <div className="mb-2 text-xs pl-2 ">
+          <div className="h-[602px]">
+            <div className="mb-1 text-xs pl-2 ">
               <strong className="text-base">Buyer (Bill to)</strong>
 
               <span className={invoice.buyerName ? `block` : "hidden"}>
@@ -209,18 +209,20 @@ const InvoicePageWrapper = () => {
               <tbody>
                 {invoice.items.map((item: InvoiceItem, idx: number) => (
                   <tr key={idx} className="h-6">
-                    <td className="border text-center">{idx + 1}</td>
-                    <td className="border w-[260px] pl-2">
+                    <td className="border w-[40px] text-center">{idx + 1}</td>
+                    <td className="border w-[300px] pl-2">
                       {item.particulars}
                     </td>
                     <td className="border  w-[70px] text-center">{item.hsn}</td>
-                    <td className="border   text-center">{item.gst}</td>
-                    <td className="border   text-center">{item.qty}</td>
+                    <td className="border w-[70px]  text-center">{item.gst}</td>
+                    <td className="border   text-center w-[70px]">
+                      {item.qty}
+                    </td>
 
-                    <td className="border   text-right pr-2">
+                    <td className="border w-[100px]  text-right pr-2">
                       ₹ {formatNumber(Number(item.rate))}
                     </td>
-                    <td className="border   text-right pr-2">
+                    <td className="border w-[100px]  text-right pr-2">
                       ₹ {formatNumber(Number(item.rate) * Number(item.qty))}
                     </td>
                   </tr>
@@ -276,8 +278,8 @@ const InvoicePageWrapper = () => {
               </table>
             </div>
 
-            <div className="py-2 border-b ">
-              <strong className="px-2">Amount Chargeable (in words) :</strong>
+            <div className="py-1 border-b ">
+              <strong className="px-2">Amount (in words) :</strong>
               {numberToWords(grandTotal.toFixed(0))} Only
             </div>
 
