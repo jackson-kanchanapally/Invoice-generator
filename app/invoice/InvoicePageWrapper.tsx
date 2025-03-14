@@ -264,7 +264,7 @@ const InvoicePageWrapper = () => {
             <br />
             IFSC: KKBK0007456
           </div> */}
-          <div className="w-1/2">
+          <div className="w-[450px] ">
             <strong>Declaration:</strong>
             <br />
             We declare that the particulars given are true and correct.
@@ -282,14 +282,15 @@ const InvoicePageWrapper = () => {
             </ol>
           </div>
           <div className="flex items-end w-[500px]">
-            <div className="text-right  w-1/2">
+            <div className="text-center  w-1/2">
               <br />
               <em>Customer Signatory</em>
             </div>
             <div className="text-right  w-1/2">
               <strong>For OM SAI TECHNOLOGIES</strong>
               <br />
-              <em>Authorized Signatory</em>
+              <div className="h-8"> </div>
+              <em className="">Authorized Signatory</em>
             </div>
           </div>
         </div>
