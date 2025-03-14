@@ -19,6 +19,18 @@ interface Invoice {
   date: string;
   buyerName: string;
   buyerGstin: string;
+  buyerPlotno: string;
+  buyerState: string;
+  buyerStateCode: string;
+  buyerArea: string;
+  DCno: string;
+  dcDate: string;
+  POno: string;
+  poDate: string;
+  wayBillno: string;
+  wayBillDate: string;
+  despatchedThrough: string;
+  destination: string;
   items: InvoiceItem[];
 }
 
@@ -43,7 +55,6 @@ const InvoicePageWrapper = () => {
     }
   }, [data]);
 
-  // Add null check before calculating totals
   if (!invoice) return <div className="p-8">Loading invoice...</div>;
 
   const totalAmount = invoice.items.reduce(
@@ -67,15 +78,15 @@ const InvoicePageWrapper = () => {
           Print Invoice
         </button>
       </div>
-
+      {/* <div className="w-full"> */}
       <div
         ref={contentRef}
         className=" w-[794px] h-[1123px] bg-white text-black border py-4 px-6 print:w-full print:border-0 print:h-full print:text-black print:bg-white"
         style={{ fontSize: "12px" }}
       >
-        <h2 className="text-center font-bold text-lg">GST INVOICE</h2>
-        <div className="flex justify-between mt-8 text-xs border-b pb-1 mb-2">
-          <div className="w-[350px] text-sm">
+        <h2 className="text-center font-bold text-base">GST INVOICE</h2>
+        <div className="flex justify-between mt-4 text-xs border-b pb-1 mb-2">
+          <div className="w-1/2 text-sm">
             <strong className="text-base">OM SAI TECHNOLOGIES</strong>
             <br />
             No. 10, Paigha Housing Colony, Behind Anand Theatre
@@ -107,36 +118,44 @@ const InvoicePageWrapper = () => {
               <div className="flex justify-between">
                 <div className="w-[300px]  px-2 py-1 ">
                   <span className="font-semibold">DC No.</span> :
+                  <span className="ml-1">{invoice.DCno}</span>
                 </div>
                 <div className="w-1/2 px-2 py-1">
                   <span className="font-semibold">Date</span> :
+                  <span className="ml-1">{invoice.dcDate}</span>
                 </div>
               </div>
 
               <div className="flex justify-between">
                 <div className="w-[300px]  px-2 py-1">
                   <span className="font-semibold">P.O. No.</span> :
+                  <span className="ml-1">{invoice.POno}</span>
                 </div>
                 <div className="w-1/2 px-2 py-1 ">
                   <span className="font-semibold">Date</span> :
+                  <span className="ml-1">{invoice.poDate}</span>
                 </div>
               </div>
 
               <div className="flex justify-between">
                 <div className="w-[300px] px-2 py-1">
                   <span className="font-semibold">Way Bill No.</span> :
+                  <span className="ml-1">{invoice.wayBillno}</span>
                 </div>
                 <div className="w-1/2 px-2 py-1">
                   <span className="font-semibold">Date</span> :
+                  <span className="ml-1">{invoice.wayBillDate}</span>
                 </div>
               </div>
 
               <div className=" px-2 py-1">
                 <span className="font-semibold">Despatched through</span> :
+                <span className="ml-1">{invoice.despatchedThrough}</span>
               </div>
 
               <div className="px-2 py-1">
                 <span className="font-semibold">Destination</span> :
+                <span className="ml-1">{invoice.destination}</span>
               </div>
             </div>
           </div>
@@ -147,13 +166,14 @@ const InvoicePageWrapper = () => {
           <br />
           {invoice.buyerName.toUpperCase()}
           <br />
-          PLOT NO-10, PAIGHA HOUSING COLONY
+          {invoice.buyerPlotno}
           <br />
-          S.P.ROAD, SECUNDERABAD - 03
+          {invoice.buyerArea}
           <br />
           GSTIN/UIN : {invoice.buyerGstin.toUpperCase()}
           <br />
-          State Name : Telangana, Code : 36
+          State Name : {invoice.buyerState},{" "}
+          {invoice.buyerStateCode ? `Code : ${invoice.buyerStateCode}` : ""}
         </div>
 
         <table className="w-full  text-xs border-collapse">
@@ -234,36 +254,7 @@ const InvoicePageWrapper = () => {
           {numberToWords(grandTotal.toFixed(0))} Only
         </div>
 
-        <div className="mt-4">
-          {/* <strong>Declaration:</strong>
-          <br />
-          We declare that the particulars given are true and correct.
-          <br />
-          <ol className="list-decimal">
-            <li className="ml-3">Goods once sold cannot be accepted back.</li>
-            <li className="ml-3">
-              Our responsibility ceases the moment goods leave our Premises and
-              no warranty for burnt/Physical damage.
-            </li>
-            <li className="ml-3">
-              Intrest@18% will be charged on bill if not paid within due date.
-            </li>
-            <li className="ml-3">Subject to Secunderabad Jurisdiction.</li>
-          </ol> */}
-        </div>
-
-        <div className="mt-4 flex justify-between">
-          {/* <div>
-            <strong>Our Bank Details:</strong>
-            <br />
-            Bank: KOTAK MAHINDRA BANK
-            <br />
-            Branch: S.P. Road, Secunderabad
-            <br />
-            A/c: 700011001908
-            <br />
-            IFSC: KKBK0007456
-          </div> */}
+        <div className="mt-4 flex justify-between ">
           <div className="w-[450px] ">
             <strong>Declaration:</strong>
             <br />
@@ -295,6 +286,7 @@ const InvoicePageWrapper = () => {
           </div>
         </div>
       </div>
+      {/* </div> */}
     </div>
   );
 };

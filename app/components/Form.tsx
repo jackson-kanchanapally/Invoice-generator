@@ -16,6 +16,18 @@ interface InvoiceData {
   date: string;
   buyerName: string;
   buyerGstin: string;
+  buyerPlotno: string;
+  buyerArea: string;
+  buyerState: string;
+  buyerStateCode: string;
+  DCno: string;
+  dcDate: string;
+  POno: string;
+  poDate: string;
+  wayBillno: string;
+  wayBillDate: string;
+  despatchedThrough: string;
+  destination: string;
   cgst: string;
   sgst: string;
   grandTotal: string;
@@ -28,7 +40,19 @@ export default function InvoiceForm() {
     date: "",
     buyerName: "",
     buyerGstin: "",
+    buyerPlotno: "",
+    buyerArea: "",
     cgst: "",
+    buyerState: "",
+    buyerStateCode: "",
+    DCno: "",
+    dcDate: "",
+    POno: "",
+    poDate: "",
+    wayBillno: "",
+    wayBillDate: "",
+    despatchedThrough: "",
+    destination: "",
     sgst: "",
     grandTotal: "",
   });
@@ -42,7 +66,11 @@ export default function InvoiceForm() {
     setInvoiceData({ ...invoiceData, [name]: value });
   };
 
-  const handleItemChange = (index: number, field: keyof InvoiceItem, value: string) => {
+  const handleItemChange = (
+    index: number,
+    field: keyof InvoiceItem,
+    value: string
+  ) => {
     const updated = [...items];
     updated[index] = { ...updated[index], [field]: value };
     setItems(updated);
@@ -70,6 +98,18 @@ export default function InvoiceForm() {
       date: "",
       buyerName: "",
       buyerGstin: "",
+      buyerPlotno: "",
+      buyerArea: "",
+      buyerState: "",
+      buyerStateCode: "",
+      DCno: "",
+      dcDate: "",
+      POno: "",
+      poDate: "",
+      wayBillno: "",
+      wayBillDate: "",
+      despatchedThrough: "",
+      destination: "",
       cgst: "",
       sgst: "",
       grandTotal: "",
@@ -82,6 +122,8 @@ export default function InvoiceForm() {
 
       {/* Invoice Info */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+        <h2 className="text-xl font-semibold mb-4">Invoice Details</h2>
+        <div></div>
         <input
           name="invoiceNo"
           placeholder="Invoice No."
@@ -96,6 +138,64 @@ export default function InvoiceForm() {
           value={invoiceData.date}
           onChange={handleChange}
         />
+        <input
+          name="DCno"
+          placeholder="DC No."
+          className="input rounded border h-12 p-2"
+          value={invoiceData.DCno}
+          onChange={handleChange}
+        />
+        <input
+          name="dcDate"
+          type="date"
+          className="input rounded border h-12 p-2"
+          value={invoiceData.dcDate}
+          onChange={handleChange}
+        />
+        <input
+          name="POno"
+          placeholder="PO No."
+          className="input rounded border h-12 p-2"
+          value={invoiceData.POno}
+          onChange={handleChange}
+        />
+        <input
+          name="poDate"
+          type="date"
+          className="input rounded border h-12 p-2"
+          value={invoiceData.poDate}
+          onChange={handleChange}
+        />
+        <input
+          name="wayBillno"
+          placeholder="Way Bill No."
+          className="input rounded border h-12 p-2"
+          value={invoiceData.wayBillno}
+          onChange={handleChange}
+        />
+        <input
+          name="wayBillDate"
+          type="date"
+          className="input rounded border h-12 p-2"
+          value={invoiceData.wayBillDate}
+          onChange={handleChange}
+        />
+
+        <input
+          name="despatchedThrough"
+          placeholder="Despatched Through"
+          className="input rounded border h-12 p-2"
+          value={invoiceData.despatchedThrough}
+          onChange={handleChange}
+        />
+        <input
+          name="destination"
+          placeholder="Destination"
+          className="input rounded border h-12 p-2"
+          value={invoiceData.destination}
+          onChange={handleChange}
+        />
+
         {/* buyer details */}
         <h2 className="text-xl font-semibold mb-1">Buyer Details</h2>
         <h1> </h1>
@@ -113,6 +213,34 @@ export default function InvoiceForm() {
           value={invoiceData.buyerGstin}
           onChange={handleChange}
         />
+        <input
+          name="buyerPlotno"
+          placeholder="Plot no , Street"
+          className="input rounded border h-12 p-2"
+          value={invoiceData.buyerPlotno}
+          onChange={handleChange}
+        />
+        <input
+          name="buyerArea"
+          placeholder="Area / Locality"
+          className="input rounded border h-12 p-2"
+          value={invoiceData.buyerArea}
+          onChange={handleChange}
+        />
+        <input
+          name="buyerState"
+          placeholder="State "
+          className="input rounded border h-12 p-2"
+          value={invoiceData.buyerState}
+          onChange={handleChange}
+        />
+        <input
+          name="buyerStateCode"
+          placeholder="State Code"
+          className="input rounded border h-12 p-2"
+          value={invoiceData.buyerStateCode}
+          onChange={handleChange}
+        />
       </div>
 
       {/* Items */}
@@ -124,7 +252,7 @@ export default function InvoiceForm() {
         >
           <input
             placeholder="Particulars"
-            className="input md:col-span-2 h-8"
+            className="input md:col-span-2 h-8 p-2"
             value={item.particulars}
             onChange={(e) =>
               handleItemChange(idx, "particulars", e.target.value)
@@ -132,19 +260,19 @@ export default function InvoiceForm() {
           />
           <input
             placeholder="HSN Code"
-            className="input h-8"
+            className="input h-8 p-2"
             value={item.hsn}
             onChange={(e) => handleItemChange(idx, "hsn", e.target.value)}
           />
           <input
             placeholder="GST %"
-            className="input h-8"
+            className="input h-8 p-2"
             value={item.gst}
             onChange={(e) => handleItemChange(idx, "gst", e.target.value)}
           />
           <input
             placeholder="Qty"
-            className="input h-8"
+            className="input h-8 p-2"
             type="number"
             value={item.qty}
             onChange={(e) => handleItemChange(idx, "qty", e.target.value)}
@@ -152,7 +280,7 @@ export default function InvoiceForm() {
           <input
             type="number"
             placeholder="Rate"
-            className="input h-8"
+            className="input h-8 p-2"
             value={item.rate}
             onChange={(e) => handleItemChange(idx, "rate", e.target.value)}
           />
@@ -167,7 +295,7 @@ export default function InvoiceForm() {
       </button>
 
       {/* Tax & Total */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
         <input
           name="cgst"
           placeholder="CGST"
@@ -189,7 +317,7 @@ export default function InvoiceForm() {
           value={invoiceData.grandTotal}
           onChange={handleChange}
         />
-      </div>
+      </div> */}
 
       {/* Submit Button */}
       <div className="mt-8 text-center">
