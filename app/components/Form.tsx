@@ -28,9 +28,9 @@ interface InvoiceData {
   wayBillDate: string;
   despatchedThrough: string;
   destination: string;
-  cgst: string;
-  sgst: string;
-  grandTotal: string;
+  // cgst: string;
+  // sgst: string;
+  // grandTotal: string;
 }
 
 export default function InvoiceForm() {
@@ -42,7 +42,6 @@ export default function InvoiceForm() {
     buyerGstin: "",
     buyerPlotno: "",
     buyerArea: "",
-    cgst: "",
     buyerState: "",
     buyerStateCode: "",
     DCno: "",
@@ -53,8 +52,9 @@ export default function InvoiceForm() {
     wayBillDate: "",
     despatchedThrough: "",
     destination: "",
-    sgst: "",
-    grandTotal: "",
+    // cgst: "",
+    // sgst: "",
+    // grandTotal: "",
   });
 
   const [items, setItems] = useState<InvoiceItem[]>([
@@ -110,9 +110,9 @@ export default function InvoiceForm() {
       wayBillDate: "",
       despatchedThrough: "",
       destination: "",
-      cgst: "",
-      sgst: "",
-      grandTotal: "",
+      // cgst: "",
+      // sgst: "",
+      // grandTotal: "",
     });
   };
 

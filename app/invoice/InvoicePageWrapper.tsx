@@ -273,19 +273,21 @@ const InvoicePageWrapper = () => {
             <tr className=" h-6">
               <td className="w-[90px]">CGST:</td>
               <td className="w-[110px] text-right">
-                ₹ {formatNumber(Number(cgst))}
+                {/* ₹ {formatNumber(Number(cgst))} */}
+                {Number(invoice.items[0].gst) / 2} %
               </td>
             </tr>
             <tr className=" h-6">
               <td className="w-[90px]">SGST:</td>
               <td className="w-[110px] text-right">
-                ₹ {formatNumber(Number(sgst))}
+                {/* ₹ {formatNumber(Number(sgst))} */}
+                {Number(invoice.items[0].gst) / 2} %
               </td>
             </tr>
             <tr className=" h-6">
               <td className="w-[90px]">IGST:</td>
               <td className="w-[110px] text-right">
-                ₹ {formatNumber(Number(sgst))}
+                {/* ₹ {formatNumber(Number(sgst))} */}
               </td>
             </tr>
             <tr className=" h-6 font-bold">
