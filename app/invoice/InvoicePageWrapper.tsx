@@ -161,21 +161,61 @@ const InvoicePageWrapper = () => {
           </div>
         </div>
 
-        <div className="mb-2 text-xs">
+        {/* <div className="mb-2 text-xs">
           <strong className="text-base">Buyer (Bill to)</strong>
           <br />
-          {invoice.buyerName.toUpperCase()}
+          <span className={invoice.buyerName ? `block` : "hidden"}>
+            {invoice.buyerName.toUpperCase()}
+          </span>
           <br />
-          {invoice.buyerPlotno}
+          <span className={invoice.buyerPlotno ? `block` : "hidden"}>
+            {invoice.buyerPlotno}
+          </span>
           <br />
-          {invoice.buyerArea}
+          <span className={invoice.buyerArea ? `block` : "hidden"}>
+            {invoice.buyerArea}
+          </span>
           <br />
-          {invoice.buyerGstin
-            ? `GSTIN/UIN : ${invoice.buyerGstin.toUpperCase()}`
-            : ""}
+          <span className={invoice.buyerGstin ? `block` : "hidden"}>
+            {invoice.buyerGstin
+              ? `GSTIN/UIN : ${invoice.buyerGstin.toUpperCase()}`
+              : ""}
+          </span>
           <br />
-          {invoice.buyerState ? `  State Name : ${invoice.buyerState}, ` : ""}
-          {invoice.buyerStateCode ? `Code : ${invoice.buyerStateCode}` : ""}
+          <span className={invoice.buyerState ? `block` : "hidden"}>
+            {invoice.buyerState ? `  State Name : ${invoice.buyerState}, ` : ""}
+          </span>
+          <span className={invoice.buyerStateCode ? `block` : "hidden"}>
+            {invoice.buyerStateCode ? `Code : ${invoice.buyerStateCode}` : ""}
+          </span>
+        </div> */}
+        <div className="mb-2 text-xs">
+          <strong className="text-base">Buyer (Bill to)</strong>
+
+          <span className={invoice.buyerName ? `block` : "hidden"}>
+            {invoice.buyerName.toUpperCase()}
+          </span>
+
+          <span className={invoice.buyerPlotno ? `block` : "hidden"}>
+            {invoice.buyerPlotno}
+          </span>
+
+          <span className={invoice.buyerArea ? `block` : "hidden"}>
+            {invoice.buyerArea}
+          </span>
+
+          <span className={invoice.buyerGstin ? `block` : "hidden"}>
+            {invoice.buyerGstin
+              ? `GSTIN/UIN : ${invoice.buyerGstin.toUpperCase()}`
+              : ""}
+          </span>
+
+          <span className={invoice.buyerState ? `block` : "hidden"}>
+            {invoice.buyerState ? `  State Name : ${invoice.buyerState}, ` : ""}
+          </span>
+          <span className={invoice.buyerStateCode ? `block` : "hidden"}>
+            {invoice.buyerStateCode ? `Code : ${invoice.buyerStateCode}` : ""}
+          </span>
         </div>
 
         <table className="w-full  text-xs border-collapse">
