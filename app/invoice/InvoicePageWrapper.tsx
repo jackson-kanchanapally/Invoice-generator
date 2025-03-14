@@ -69,7 +69,7 @@ const InvoicePageWrapper = () => {
   };
 
   return (
-    <div className="flex flex-col items-center p-8">
+    <div className="flex flex-col items-center p-8 overflow-x-auto">
       <div className="mb-4">
         <button
           onClick={() => reactToPrintFn()}
@@ -81,11 +81,11 @@ const InvoicePageWrapper = () => {
       {/* <div className="w-full"> */}
       <div
         ref={contentRef}
-        className=" w-[794px] h-[1123px] bg-white text-black border py-4 px-6 print:w-full print:border-0 print:h-full print:text-black print:bg-white"
+        className="w-[794px] mx-auto  h-[1123px] bg-white text-black border py-4 px-6 print:w-full print:border-0 print:h-full print:text-black print:bg-white"
         style={{ fontSize: "12px" }}
       >
-        <h2 className="text-center font-bold text-base">GST INVOICE</h2>
-        <div className="flex justify-between mt-4 text-xs border-b pb-1 mb-2">
+        <h2 className="text-center font-bold  text-base">GST INVOICE</h2>
+        <div className="flex justify-between mt-4  text-xs border-b pb-1 mb-2">
           <div className="w-1/2 text-sm">
             <strong className="text-base">OM SAI TECHNOLOGIES</strong>
             <br />
@@ -170,9 +170,11 @@ const InvoicePageWrapper = () => {
           <br />
           {invoice.buyerArea}
           <br />
-          GSTIN/UIN : {invoice.buyerGstin.toUpperCase()}
+          {invoice.buyerGstin
+            ? `GSTIN/UIN : ${invoice.buyerGstin.toUpperCase()}`
+            : ""}
           <br />
-          State Name : {invoice.buyerState},{" "}
+          {invoice.buyerState ? `  State Name : ${invoice.buyerState}, ` : ""}
           {invoice.buyerStateCode ? `Code : ${invoice.buyerStateCode}` : ""}
         </div>
 
