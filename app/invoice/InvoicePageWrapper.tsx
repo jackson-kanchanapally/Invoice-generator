@@ -86,8 +86,8 @@ const InvoicePageWrapper = () => {
       >
         <h2 className="text-center font-bold  text-base">GST INVOICE</h2>
         <div className="border flex-grow ">
-          <div className="flex justify-between mt-4  text-xs border-b pb-1 mb-2">
-            <div className="w-1/2 text-sm pl-2">
+          <div className="flex justify-between mt-2  text-xs border-b pb-1 mb-2">
+            <div className="w-1/2 text-xs pl-2 ">
               <strong className="text-base">OM SAI TECHNOLOGIES</strong>
               <br />
               No. 10, Paigha Housing Colony, Behind Anand Theatre
@@ -106,63 +106,63 @@ const InvoicePageWrapper = () => {
             <div className="w-[390px] border-l px-2">
               <div className="max-w-2xl  text-xs">
                 <div className="flex justify-between">
-                  <div className="w-[300px]  px-2 py-1 ">
+                  <div className="w-[300px]  px-2 pb-[2px]">
                     <span className="font-semibold">Invoice No.</span> :{" "}
                     <span className="ml-1"> {invoice.invoiceNo}</span>
                   </div>
-                  <div className="w-1/2 px-2 py-1 ">
+                  <div className="w-1/2 px-2 ">
                     <span className="font-semibold">Date</span> :{" "}
                     <span className="ml-1">{invoice.date}</span>
                   </div>
                 </div>
 
-                <div className="flex justify-between">
-                  <div className="w-[300px]  px-2 py-1 ">
+                <div className="flex justify-between  pb-[2px]">
+                  <div className="w-[300px]  px-2">
                     <span className="font-semibold">DC No.</span> :
                     <span className="ml-1">{invoice.DCno}</span>
                   </div>
-                  <div className="w-1/2 px-2 py-1">
+                  <div className="w-1/2 px-2">
                     <span className="font-semibold">Date</span> :
                     <span className="ml-1">{invoice.dcDate}</span>
                   </div>
                 </div>
 
-                <div className="flex justify-between">
-                  <div className="w-[300px]  px-2 py-1">
+                <div className="flex justify-between pb-[2px]">
+                  <div className="w-[300px]  px-2 ">
                     <span className="font-semibold">P.O. No.</span> :
                     <span className="ml-1">{invoice.POno}</span>
                   </div>
-                  <div className="w-1/2 px-2 py-1 ">
+                  <div className="w-1/2 px-2 ">
                     <span className="font-semibold">Date</span> :
                     <span className="ml-1">{invoice.poDate}</span>
                   </div>
                 </div>
 
-                <div className="flex justify-between">
-                  <div className="w-[300px] px-2 py-1">
+                <div className="flex justify-between pb-[2px]">
+                  <div className="w-[300px] px-2 ">
                     <span className="font-semibold">Way Bill No.</span> :
                     <span className="ml-1">{invoice.wayBillno}</span>
                   </div>
-                  <div className="w-1/2 px-2 py-1">
+                  <div className="w-1/2 px-2">
                     <span className="font-semibold">Date</span> :
                     <span className="ml-1">{invoice.wayBillDate}</span>
                   </div>
                 </div>
 
-                <div className=" px-2 py-1">
+                <div className=" px-2 pb-[2px]">
                   <span className="font-semibold">Despatched through</span> :
                   <span className="ml-1">{invoice.despatchedThrough}</span>
                 </div>
 
-                <div className="px-2 py-1">
+                <div className="px-2 ">
                   <span className="font-semibold">Destination</span> :
                   <span className="ml-1">{invoice.destination}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="h-[500px]">
-            <div className="mb-2 text-xs pl-2">
+          <div className="h-[575px]">
+            <div className="mb-2 text-xs pl-2 ">
               <strong className="text-base">Buyer (Bill to)</strong>
 
               <span className={invoice.buyerName ? `block` : "hidden"}>
@@ -177,22 +177,20 @@ const InvoicePageWrapper = () => {
                 {invoice.buyerArea}
               </span>
 
-              <span className={invoice.buyerGstin ? `block` : "hidden"}>
+              <span className={invoice.buyerGstin ? `block font` : "hidden"}>
+                <span className="font-bold">GSTIN/UIN : </span>
                 {invoice.buyerGstin
-                  ? `GSTIN/UIN : ${invoice.buyerGstin.toUpperCase()}`
+                  ? ` ${invoice.buyerGstin.toUpperCase()}`
                   : ""}
               </span>
 
-              <span className={invoice.buyerState ? `block` : "hidden"}>
-                {invoice.buyerState
-                  ? `  State Name : ${invoice.buyerState}, `
-                  : ""}
-              </span>
-              <span className={invoice.buyerStateCode ? `block` : "hidden"}>
-                {invoice.buyerStateCode
-                  ? `Code : ${invoice.buyerStateCode}`
-                  : ""}
-              </span>
+              <div>
+                <span className={invoice.buyerState ? `block` : "hidden"}>
+                  <span className="font-bold">State Name :</span>
+                  {invoice.buyerState ? `   ${invoice.buyerState},` : ""}
+                  <span>Code: {invoice.buyerStateCode}</span>
+                </span>
+              </div>
             </div>
 
             <table className="w-full text-xs border-collapse">
@@ -232,7 +230,7 @@ const InvoicePageWrapper = () => {
           </div>
           {/* Total Section*/}
           <div className="">
-            <div className="w-full flex  justify-between items-end p-4 border-b">
+            <div className="w-full flex  justify-between items-end px-4 py-1 border-b">
               <div className="">
                 <strong>Our Bank Details:</strong>
                 <br />
@@ -244,7 +242,7 @@ const InvoicePageWrapper = () => {
               </div>
               <table className="text-xs border">
                 <tr className=" h-6">
-                  <td className="w-[90px] border px-2">Amount: </td>
+                  <td className="w-[90px]  border px-2">Amount: </td>
                   <td className="w-[110px] border px-2 text-right">
                     ₹ {formatNumber(totalAmount)}
                   </td>
@@ -283,7 +281,7 @@ const InvoicePageWrapper = () => {
               {numberToWords(grandTotal.toFixed(0))} Only
             </div>
 
-            <div className="mt-4 flex justify-between ">
+            <div className="mt-2 flex justify-between ">
               <div className="w-[460px] pl-2">
                 {/* <strong>Declaration:</strong> */}
                 We declare that the particulars given are true and correct.
@@ -313,8 +311,8 @@ const InvoicePageWrapper = () => {
                 <div className="text-right  w-1/2">
                   <strong>For OM SAI TECHNOLOGIES</strong>
                   <br />
-                  <div className="h-8"> </div>
-                  <em className="">Authorized Signatory</em>
+                  <div className="h-18"> </div>
+                  <em className="px-4">Authorized Signatory</em>
                 </div>
               </div>
             </div>
