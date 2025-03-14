@@ -187,7 +187,7 @@ const InvoicePageWrapper = () => {
               <div>
                 <span className={invoice.buyerState ? `block` : "hidden"}>
                   <span className="font-bold">State Name :</span>
-                  {invoice.buyerState ? `   ${invoice.buyerState},` : ""}
+                  {invoice.buyerState ? `   ${invoice.buyerState}, ` : ""}
                   <span>Code: {invoice.buyerStateCode}</span>
                 </span>
               </div>
@@ -266,7 +266,8 @@ const InvoicePageWrapper = () => {
                 <tr className=" h-6">
                   <td className="w-[90px] border px-2">IGST:</td>
                   <td className="w-[110px] border px-2 text-right">
-                    {/* ₹ {formatNumber(Number(sgst))} */}
+                    {/* Add this formula if it is correct */}
+                    {/* ₹ {formatNumber(Number(sgst)+Number(cgst))} */}
                   </td>
                 </tr>
                 <tr className=" h-6 font-bold ">
