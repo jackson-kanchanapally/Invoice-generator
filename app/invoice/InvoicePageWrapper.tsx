@@ -103,7 +103,7 @@ const InvoicePageWrapper = () => {
               PAN : ADEPG7460R
               <br />
             </div>
-            <div className="w-[390px] border-l px-2">
+            <div className="w-[390px] border-l px-2 pt-2">
               <div className="max-w-2xl  text-xs">
                 <div className="flex justify-between">
                   <div className="w-[300px]  px-2 pb-[2px]">
@@ -138,7 +138,7 @@ const InvoicePageWrapper = () => {
                   </div>
                 </div>
 
-                <div className="flex justify-between pb-[2px]">
+                <div className="flex justify-between pb-[2px] ">
                   <div className="w-[300px] px-2 ">
                     <span className="font-semibold">Way Bill No.</span> :
                     <span className="ml-1">{invoice.wayBillno}</span>
@@ -164,10 +164,17 @@ const InvoicePageWrapper = () => {
           <div className="h-[602px]">
             <div className="mb-1 text-xs pl-2 ">
               <strong className="text-base">Buyer (Bill to)</strong>
-
-              <span className={invoice.buyerName ? `block` : "hidden"}>
-                {invoice.buyerName.toUpperCase()}
-              </span>
+              <div className="flex  justify-between pr-54 ">
+                <span className={invoice.buyerName ? `block` : "hidden"}>
+                  {invoice.buyerName.toUpperCase()}
+                </span>
+                <span className={invoice.buyerGstin ? `block font` : "hidden"}>
+                  <span className="font-bold">GSTIN/UIN : </span>
+                  {invoice.buyerGstin
+                    ? ` ${invoice.buyerGstin.toUpperCase()}`
+                    : ""}
+                </span>
+              </div>
 
               <span className={invoice.buyerPlotno ? `block` : "hidden"}>
                 {invoice.buyerPlotno}
@@ -175,13 +182,6 @@ const InvoicePageWrapper = () => {
 
               <span className={invoice.buyerArea ? `block` : "hidden"}>
                 {invoice.buyerArea}
-              </span>
-
-              <span className={invoice.buyerGstin ? `block font` : "hidden"}>
-                <span className="font-bold">GSTIN/UIN : </span>
-                {invoice.buyerGstin
-                  ? ` ${invoice.buyerGstin.toUpperCase()}`
-                  : ""}
               </span>
 
               <div>
