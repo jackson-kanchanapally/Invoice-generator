@@ -1,10 +1,10 @@
-import InvoicePageWrapper from "./InvoicePageWrapper"; // 🛑 Problem might be here
+import InvoicePageWrapper from "./InvoicePageWrapper"; 
 import { Suspense } from "react";
 export default function Page() {
   return (
     <div>
       <Suspense fallback={<div>Loading invoice...</div>}>
-        <InvoicePageWrapper /> {/* Error shows here */}
+        <InvoicePageWrapper /> 
       </Suspense>
     </div>
   );

@@ -53,6 +53,9 @@ const InvoicePageWrapper = () => {
   const cgst = (totalAmount * 0.09).toFixed(2);
   const sgst = (totalAmount * 0.09).toFixed(2);
   const grandTotal = Number(totalAmount) + Number(cgst) + Number(sgst);
+  const formatNumber = (num: number) => {
+    return new Intl.NumberFormat("en-IN").format(num);
+  };
 
   return (
     <div className="flex flex-col items-center p-8">
@@ -89,7 +92,7 @@ const InvoicePageWrapper = () => {
             <br />
           </div>
           <div className="w-[390px] border-l px-2">
-            <div className="max-w-2xl  text-sm">
+            <div className="max-w-2xl  text-xs">
               <div className="flex justify-between">
                 <div className="w-[300px]  px-2 py-1 ">
                   <span className="font-semibold">Invoice No.</span> :{" "}
@@ -139,7 +142,7 @@ const InvoicePageWrapper = () => {
           </div>
         </div>
 
-        <div className="mb-2 text-sm">
+        <div className="mb-2 text-xs">
           <strong className="text-base">Buyer (Bill to)</strong>
           <br />
           {invoice.buyerName.toUpperCase()}
@@ -175,42 +178,19 @@ const InvoicePageWrapper = () => {
                 <td className="border   text-center">{item.gst}</td>
                 <td className="border   text-center">{item.qty}</td>
 
-                <td className="border   text-center">₹ {item.rate}</td>
-                <td className="border   text-center">
-                  ₹ {Number(item.rate) * Number(item.qty)}
+                <td className="border   text-right pr-2">
+                  ₹ {formatNumber(Number(item.rate))}
+                </td>
+                <td className="border   text-right pr-2">
+                  ₹ {formatNumber(Number(item.rate) * Number(item.qty))}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="w-full flex justify-end p-4 border-b">
-          <table className="text-xs ">
-            <tr className=" h-6">
-              <td className="w-[120px]">Total: </td>
-              <td>₹ {totalAmount}</td>
-            </tr>
-            <tr className=" h-6">
-              <td className="w-[120px]">CGST:</td>
-              <td>₹ {cgst}</td>
-            </tr>
-            <tr className=" h-6">
-              <td className="w-[120px]">SGST:</td>
-              <td>₹ {sgst}</td>
-            </tr>
-            <tr className=" h-6 font-bold">
-              <td className="w-[120px] ">Total Amount:</td>
-              <td>₹ {grandTotal}</td>
-            </tr>
-          </table>
-        </div>
 
-        <div className="py-2 border-b ">
-          <strong className="pr-2">Amount Chargeable (in words) :</strong>
-          {numberToWords(grandTotal.toFixed(0))} Only
-        </div>
-
-        <div className="mt-4">
-          <div>
+        <div className="w-full flex  justify-between items-end p-4 border-b">
+          <div className="">
             <strong>Our Bank Details:</strong>
             <br />
             Bank: KOTAK MAHINDRA BANK
@@ -221,6 +201,40 @@ const InvoicePageWrapper = () => {
             <br />
             IFSC: KKBK0007456
           </div>
+          <table className="text-xs ">
+            <tr className=" h-6">
+              <td className="w-[90px]">Total: </td>
+              <td className="w-[110px] text-right">
+                ₹ {formatNumber(totalAmount)}
+              </td>
+            </tr>
+            <tr className=" h-6">
+              <td className="w-[90px]">CGST:</td>
+              <td className="w-[110px] text-right">
+                ₹ {formatNumber(Number(cgst))}
+              </td>
+            </tr>
+            <tr className=" h-6">
+              <td className="w-[90px]">SGST:</td>
+              <td className="w-[110px] text-right">
+                ₹ {formatNumber(Number(sgst))}
+              </td>
+            </tr>
+            <tr className=" h-6 font-bold">
+              <td className="w-[90px] ">Total Amount:</td>
+              <td className="w-[110px]  text-right ">
+                ₹ {formatNumber(grandTotal)}
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div className="py-2 border-b ">
+          <strong className="pr-2">Amount Chargeable (in words) :</strong>
+          {numberToWords(grandTotal.toFixed(0))} Only
+        </div>
+
+        <div className="mt-4">
           {/* <strong>Declaration:</strong>
           <br />
           We declare that the particulars given are true and correct.
