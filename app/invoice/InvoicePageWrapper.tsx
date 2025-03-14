@@ -218,7 +218,7 @@ const InvoicePageWrapper = () => {
           </span>
         </div>
 
-        <table className="w-full  text-xs border-collapse">
+        <table className="w-full text-xs border-collapse">
           <thead>
             <tr className="bg-gray-200 h-8">
               <th className="border">Sl No</th>
@@ -235,7 +235,7 @@ const InvoicePageWrapper = () => {
             {invoice.items.map((item: InvoiceItem, idx: number) => (
               <tr key={idx} className="h-6">
                 <td className="border text-center">{idx + 1}</td>
-                <td className="border   pl-2">{item.particulars}</td>
+                <td className="border w-[270px]  pl-2">{item.particulars}</td>
                 <td className="border   text-center">{item.hsn}</td>
                 <td className="border   text-center">{item.gst}</td>
                 <td className="border   text-center">{item.qty}</td>
@@ -265,7 +265,7 @@ const InvoicePageWrapper = () => {
           </div>
           <table className="text-xs ">
             <tr className=" h-6">
-              <td className="w-[90px]">Total: </td>
+              <td className="w-[90px]">Amount: </td>
               <td className="w-[110px] text-right">
                 ₹ {formatNumber(totalAmount)}
               </td>
@@ -282,8 +282,14 @@ const InvoicePageWrapper = () => {
                 ₹ {formatNumber(Number(sgst))}
               </td>
             </tr>
+            <tr className=" h-6">
+              <td className="w-[90px]">IGST:</td>
+              <td className="w-[110px] text-right">
+                ₹ {formatNumber(Number(sgst))}
+              </td>
+            </tr>
             <tr className=" h-6 font-bold">
-              <td className="w-[90px] ">Total Amount:</td>
+              <td className="w-[90px] ">Grand Total:</td>
               <td className="w-[110px]  text-right ">
                 ₹ {formatNumber(grandTotal)}
               </td>
